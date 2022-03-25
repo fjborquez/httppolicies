@@ -4,7 +4,7 @@
   "description": "This library do an abstraction of different http policies like Cross-Origin-Embedder-Policy and Cross-Origin-Opener-Policy",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/nyc --reporter=lcov ./node_modules/.bin/mocha --recursive ./test/"
+    "test": "nyc --reporter=lcov mocha --recursive ./test/" 
   },
   "repository": {
     "type": "git",
