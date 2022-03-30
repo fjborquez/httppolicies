@@ -1,1 +1,1 @@
-module.exports = require('./lib/httppolicies/httppolicyfactory');
+module.exports = require('./lib/httppolicies/httppolicymanager')();

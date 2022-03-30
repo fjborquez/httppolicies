@@ -1,6 +1,6 @@
 {
   "name": "@fjborquez/httppolicies",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "This library do an abstraction of different http policies like Cross-Origin-Embedder-Policy and Cross-Origin-Opener-Policy",
   "main": "index.js",
   "scripts": {

@@ -1,26 +1,52 @@
 const expect = require('chai').expect;
-const sinon  = require('sinon');
-const factory = require('../lib/httppolicies/httppolicyfactory');
+const httpPolicy = require('../lib/httppolicies/httppolicyfactory');
 
 describe('httppolicyfactory', function() {
-    describe('create existing policy', function() {
-        it('should return the coep policy', function() {
-            const policy = factory({ policy: 'coep' });
-            expect(policy).to.be.an('object');
-            expect(policy.getHeaderName()).to.equal('Cross-Origin-Embedder-Policy');
-        });
+    beforeEach(function() {
+        this.settings = {
+            defaultDirective: 'directive1',
+            directives: ['directive2', 'directive3'],
+            headerName: 'headerName',
+        };
 
-        it('should return the coop policy', function() {
-            const policy = factory({ policy: 'coop' });
-            expect(policy).to.be.an('object');
-            expect(policy.getHeaderName()).to.equal('Cross-Origin-Opener-Policy');
+        this.policy = httpPolicy(this.settings);
+    });
+
+    describe('create object', function() {
+        it('should create the policy object', function() {
+            expect(this.policy).to.be.an('object');
         });
     });
-    describe('create non-existing policy', function() {
-        it('should throw an error', function() {
-            expect(() => {
-                factory({ policy: 'invalid' });
-            }).to.throw(Error);
+
+    describe('isDirectiveAllowed', function() {
+        it('should return true when directive exists', function() {
+            expect(this.policy.isDirectiveAllowed('directive1')).to.be.true;
+        });
+
+        it('should return false when directive does not exist', function() {
+            expect(this.policy.isDirectiveAllowed('directive0')).to.be.false;
+        });
+    });
+
+    describe('getDirectiveOrDefault', function() {
+        it('should return the default directive when directive does not exist', function() {
+            expect(this.policy.getDirectiveOrDefault('directive0')).to.equal('directive1');
+        });
+
+        it('should return the directive when it exists', function() {
+            expect(this.policy.getDirectiveOrDefault('directive2')).to.equal('directive2');
+        });
+    });
+
+    describe('getDefaultDirective', function() {
+        it('should return the default directive', function() {
+            expect(this.policy.getDefaultDirective()).to.equal('directive1');
+        });
+    });
+
+    describe('getHeaderName', function() {
+        it('should return the header name', function() {
+            expect(this.policy.getHeaderName()).to.equal('headerName');
         });
     });
 });
